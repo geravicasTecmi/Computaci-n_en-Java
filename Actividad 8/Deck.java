@@ -23,7 +23,11 @@ public class Deck {
         this.numCard = numCard;
     }
 
-    public String mezclar() {
+    public String mezclar() throws Exception{
+        if (getCard().size()==0){
+            throw new Exception("Se han agotado las cartas. Saliendo...");
+        }
+
         Collections.shuffle(card);
         return "mezclando...";
     }
@@ -32,14 +36,22 @@ public class Deck {
         this.card.remove(pos);
     }
 
-    public void head(){
+    public void head() throws Exception{
+        if (getCard().size()==0){
+            throw new Exception("Se han agotado las cartas. Saliendo...");
+        }
+
         Card card= getCard().get(0);
         System.out.println("{" +card.getPalo() +"},{" +card.getColor() +"},{" +card.getValor() +"}");
         removeCard(0);
         System.out.println("Quedan:" +getCard().size());
     }
 
-    public void pick(){
+    public void pick() throws Exception{
+        if (getCard().size()==0){
+            throw new Exception("Se han agotado las cartas. Saliendo...");
+        }
+
         Random numRandom = new Random();
         int num = numRandom.nextInt(getCard().size());
         Card card = getCard().get(num);
@@ -48,7 +60,11 @@ public class Deck {
         System.out.println("Quedan:" +getCard().size());
     }
 
-    public void hand(){
+    public void hand() throws Exception{
+        if (getCard().size()==0){
+            throw new Exception("Se han agotado las cartas. Saliendo...");
+        }
+
         for (int i=0; i<5; i++){
             Random numRandom = new Random();
             int num = numRandom.nextInt(getCard().size());
