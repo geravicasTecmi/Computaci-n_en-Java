@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static java.lang.System.exit;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -11,6 +9,7 @@ public class Main {
         String[] valor = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
         Integer cont = 1;
         int opcion;
+        boolean exit=true;
         Deck deck = new Deck();
         deck.setCard(new ArrayList<Card>());
         for (int i = 0; i < palo.length; i++) {
@@ -21,41 +20,62 @@ public class Main {
 
         }
 
-        do{
-            opcion=showMenu(deck);
+        do {
+            try {
+                opcion = showMenu(deck);
 
-            switch (opcion){
-                case 1:
-                    System.out.println("Mezclar Deck\n" + deck.mezclar());
-                    break;
+                switch (opcion) {
+                    case 1:
+                        try {
+                            System.out.println("Mezclar Deck\n" + deck.mezclar());
+                        } catch (Exception e){
+                            System.out.println(e.getMessage());
+                            exit=false;
+                        }
+                        break;
 
-                case 2:
-                    System.out.println("\nObtener la primer carta en la lista:");
-                    deck.head();
-                    break;
+                    case 2:
+                        try {
+                            System.out.println("\nObtener la primer carta en la lista:");
+                            deck.head();
+                        } catch (Exception e){
+                            System.out.println(e.getMessage());
+                            exit=false;
+                        }
+                        break;
 
-                case 3:
-                    System.out.println("\nCarta al azar:");
-                    deck.pick();
-                    break;
+                    case 3:
+                        try {
+                            System.out.println("\nCarta al azar:");
+                            deck.pick();
+                        } catch (Exception e){
+                            System.out.println(e.getMessage());
+                            exit=false;
+                        }
+                        break;
 
-                case 4:
-                    System.out.println("\nArreglo de cartas:");
-                    deck.hand();
-                    break;
+                    case 4:
+                        try {
+                            System.out.println("\nArreglo de cartas:");
+                            deck.hand();
+                        } catch (Exception e){
+                            System.out.println(e.getMessage());
+                            exit=false;
+                        }
+                        break;
 
-                case 0:
-                    System.out.println("Saliendo...");
-                    break;
-
-                default:
-                    System.out.println("Opción no válida");
-                    break;
+                    case 0:
+                        System.out.println("Saliendo...");
+                        exit=false;
+                        break;
+                }
+            } catch (Exception e){
+                System.out.println(e.getMessage());
             }
-        } while(opcion !=0);
+        } while (exit);
     }
 
-    public static int showMenu(Deck deck){
+    public static int showMenu(Deck deck) throws Exception{
         Scanner texto = new Scanner(System.in);
         int eleccion;
 
@@ -70,6 +90,9 @@ public class Main {
         System.out.println("0 Salir");
         eleccion = texto.nextInt();
 
+        if ((eleccion<0)||(eleccion>4)){
+            throw new Exception("Opción no válida. Ingresa un número del 1 al 4.");
+        }
         return eleccion;
     }
 
